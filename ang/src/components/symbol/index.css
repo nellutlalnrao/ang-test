@@ -1,0 +1,16 @@
+.segment {
+  position: absolute;
+  background-color: gray;
+  transition: background-color 0.2s;
+}
+.segment.active { background-color: red; }
+.segment.diagSlash1 { 
+  width: 10%; height: 100%;
+  top: 0; left: 45%;
+  transform: rotate(45deg);
+}
+.segment.diagSlash2 {
+  width: 10%; height: 100%;
+  top: 0; left: 45%;
+  transform: rotate(-45deg);
+}

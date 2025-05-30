@@ -1,0 +1,73 @@
+.digit {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 2;
+  /*background: #000; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.segment {
+  cursor: pointer;
+  position: absolute;
+  background: #444; /* Default background */
+  transition: background 0.2s;
+  border-radius: 2px;
+  margin: 2px;
+}
+
+/* Layout for each segment using absolute positioning */
+.a {
+  top: 5%;
+  left: 15%;
+  right: 15%;
+  height: 8px;
+}
+
+.b {
+  top: 10%;
+  right: 5%;
+  width: 8px;
+  height: 35%;
+}
+
+.c {
+  bottom: 10%;
+  right: 5%;
+  width: 8px;
+  height: 35%;
+}
+
+.d {
+  bottom: 5%;
+  left: 15%;
+  right: 15%;
+  height: 8px;
+}
+
+.e {
+  bottom: 10%;
+  left: 5%;
+  width: 8px;
+  height: 35%;
+}
+
+.f {
+  top: 10%;
+  left: 5%;
+  width: 8px;
+  height: 35%;
+}
+
+.g {
+  top: 46%;
+  left: 15%;
+  right: 15%;
+  height: 8px;
+}
+
+.segment.pending-toggle {
+  border: 2px solid yellow;
+}
