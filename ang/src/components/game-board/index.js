@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Digit from "./../digit/index.js"; // Your existing Digit component
 import "./index.css";
 
@@ -22,6 +22,10 @@ const GameBoard = ({ initialLeft, initialRight, operator, initialResult, allowed
   const [lhs1, setLhs1] = useState(parseDigits(initialLeft));   // ["0", "2"]
   const [lhs2, setLhs2] = useState(parseDigits(initialRight));  // ["0", "1"]
   const [res, setRes] = useState(parseDigits(initialResult));   // ["1", "0"]
+
+  const operations = ['+', '-', 'x', '/'];
+  const [operPosition, setOperPosition] = useState(0);
+  const [operVal, setOperVal] = useState();
 
   const handleMove = () => {
     setMovesLeft((prev) => Math.max(0, prev - 1));
@@ -64,34 +68,82 @@ const GameBoard = ({ initialLeft, initialRight, operator, initialResult, allowed
     }
   };
 
-  return (<div style={styles.container}>
-      <p style={styles.movesText}>
-        <strong>Moves Left:</strong> {movesLeft}
-      </p>
-      <div style={{ backgroundColor:'#000', borderRadius:'8px', boxShadow:'2px 2px 2px 2px #808080', 
-        margin:'15px', paddingRight:'12px', paddingTop:'12px', paddingBottom:'12px' }}>
-        
-        <div style={styles.row}>
-          <div style={styles.operatorBox}></div>
-        
-          <div>
-            {lhs1.map((d, i) => (
-              <div style={{ width:'60px' }}>
-              <Digit
-                key={`lhs1-${i}`}
-                num={d}
-                remainingMoves={movesLeft}
-                consumeMove={handleMove}
-                onMatchChange={onMatchChange(setLhs1, i)}
-              />
-              </div>
-            ))}
-          </div>
-        
+  const updateOperand = () => {
+    setOperPosition((prev) => (prev + 1) % operations.length);
+  };
 
+  useEffect(() => {
+    setOperVal(operations[operPosition]);
+  }, [operPosition]);
+
+  return (
+    <div style={styles.container}>
+      <p style={styles.movesText}>
+        Remaining Moves: {movesLeft}
+      </p>
+      <div style={{ display:'inline-block', backgroundColor:'#000', borderRadius:'8px', boxShadow:'2px 2px 2px 2px #808080', 
+        margin:'15px', paddingRight:'15px', paddingTop:'15px', paddingBottom:'15px' }}>
+        
+      <div style={styles.row}>
+        <div style={styles.operatorBox} onClick={updateOperand}>
+          <b>{operVal}</b>
         </div>
+        <div style={{ display:'flex', flexDirection:'row' }}>
+          {lhs1.map((d, i) => (
+          <div style={{ width:'60px' }}>
+          <Digit
+            key={`lhs1-${i}`}
+            num={d}
+            remainingMoves={movesLeft}
+            consumeMove={handleMove}
+            onMatchChange={onMatchChange(setLhs1, i)}
+          />
+          </div>
+        ))}
+        </div>
+      </div>
+      <div style={styles.row}>
+        <div style={styles.operatorBox} onClick={updateOperand}>
+          <b>{operVal}</b>
+        </div>
+        <div style={{ display:'flex', flexDirection:'row' }}>
+          {lhs2.map((d, i) => (
+          <div style={{ width:'60px' }}>
+          <Digit
+            key={`lhs2-${i}`}
+            num={d}
+            remainingMoves={movesLeft}
+            consumeMove={handleMove}
+            onMatchChange={onMatchChange(setLhs2, i)}
+          />
+          </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ paddingLeft:'15px', paddingTop:'8px' }}>
+        {/*<div style={{ backgroundColor:'red', width:'100%', height:'5px' }}></div>*/}
+      </div>
+      <div style={styles.row}>
+        <div style={styles.operatorBox}></div>
+        <div style={{ display:'flex', flexDirection:'row', borderTop:'5px solid red', paddingTop:'5px',
+            borderBottom:'5px solid red', paddingBottom:'5px'
+         }}>
+          {res.map((d, i) => (
+          <div style={{ width:'60px' }}>
+          <Digit
+            key={`res-${i}`}
+            num={d}
+            remainingMoves={movesLeft}
+            consumeMove={handleMove}
+            onMatchChange={onMatchChange(setRes, i)}
+          />
+          </div>
+        ))}
+        </div>
+      </div>
+      </div>
     </div>
-  </div>);
+  );
 
   return (
     <div style={{ textAlign: "center", fontFamily: "monospace" }}>
