@@ -97,7 +97,7 @@ const Digit = ({ num, remainingMoves, consumeMove, onMatchChange }) => {
           ></div>
         ))}
       </div>
-      <p style={{ color: "#0f0", marginTop: "10px" }}>
+      <p style={{ color: "#fff", marginTop: "10px" }}>
         {matchedDigit !== null ? `${matchedDigit}` : "-"}
       </p>
     </div>

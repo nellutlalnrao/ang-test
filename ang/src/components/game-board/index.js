@@ -63,8 +63,8 @@ const GameBoard = ({ initialLeft, initialRight, operator, initialResult, allowed
     },
     movesText: {
       fontWeight: 'bold',
-      color: '#0f0',
-      fontSize: '20px',
+      color: '#000',
+      fontSize: '18px',
     }
   };
 
